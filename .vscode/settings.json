@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Users\\Sasha\\.platformio\\penv\\Scripts;C:\\Users\\Sasha\\.platformio\\penv;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Sasha\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Sasha\\AppData\\Roaming\\npm;C:\\Program Files\\Microsoft VS Code\\bin;;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Sasha\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Sasha\\AppData\\Roaming\\npm;C:\\Program Files\\Microsoft VS Code\\bin;",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
