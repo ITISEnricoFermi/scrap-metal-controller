@@ -17,7 +17,7 @@ Buffer::Buffer(char* packet){
     }
     
     char macStr[18] = { 0 };
-    sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X\0", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
     m_mac = String(macStr);
     length = (int)packet[offset++];
     char payload[length];
@@ -30,16 +30,14 @@ Buffer::Buffer(char* packet){
 
 
 void Buffer::print(){
-    //Serial.println("-----------------");
+    Serial.println("-----------------");
     Serial.print("type: ");
     Serial.println(m_type);
     
-    //Serial.print("mac: ");
-    //Serial.println(m_mac.c_str());
+    Serial.print("mac: ");
+    Serial.println(m_mac);
     
-    Serial.print("\n");
-    //Serial.println(length);
-    Serial.println(getPayload());
-    //Serial.println(m_payload.length());
-    //Serial.println("-----------------");
+    Serial.println("payload:");
+    Serial.println(m_payload);
+    Serial.println("-----------------");
 }

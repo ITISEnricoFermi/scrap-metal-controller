@@ -66,11 +66,11 @@ void loop(){
     // read the packet into packetBufffer
     udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
     Buffer packet(packetBuffer);
-    //packet.print();
+    packet.print();
     
-    Serial.println("Content:");
-    printBufferHex(packet.getPayload(), packet.getLength());
-    printBufferHex(packetBuffer, packetSize);
+    //Serial.println("Content:");
+    //printBufferHex(packet.getPayload(), packet.getLength());
+    //printBufferHex(packetBuffer, packetSize);
     //Serial.println(packetBuffer);
 
     //clear the buffer
