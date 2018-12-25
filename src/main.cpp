@@ -1,9 +1,14 @@
 
 #include <WiFi.h>
 #include <WiFiUdp.h>
-#include <IPAddress.h>
+#include "buffer.h"
+//#include <IPAddress.h>
+#define UDP_TX_PACKET_MAX_SIZE 512
 
+//Functions declaration
 void printWiFiInfo();
+void printBufferHex(char* buff, uint16_t length);
+void printBufferHex(String buff, uint16_t length);
 void connectToWiFi(const char * ssid, const char * pwd);
 void WiFiEvent(WiFiEvent_t event);
 IPAddress calculateBroadcast(IPAddress ip, IPAddress subnet);
@@ -13,11 +18,9 @@ const char * networkName = "Sol 2.4";
 const char * networkPswd = "U43UU8CRUR";
 
 //IP address to send UDP data to:
-// either use the ip address of the server or 
-// a network broadcast address
 IPAddress broadcast;
-//const char * udpAddress = "192.168.0.255";
-const int udpPort = 51966;
+const int remotePort = 0xcafe;  //51966
+const int localPort  = 0xbeaf;  //48815
 
 //Are we currently connected?
 boolean connected = false;
@@ -28,21 +31,59 @@ WiFiUDP udp;
 //delay between each packet
 const unsigned int beatRate = 5000;
 
+
+// buffers for receiving and sending data
+char packetBuffer[UDP_TX_PACKET_MAX_SIZE]; //buffer to hold incoming packet,
+
 void setup(){
   // Initilize hardware serial:
   Serial.begin(115200);
   
+
   //Connect to the WiFi network
   connectToWiFi(networkName, networkPswd);
 }
 
 void loop(){
-  //only send data when connected
+  if(!connected) return;
+
+
+  int packetSize = udp.parsePacket();
+  if (packetSize) {
+    if(packetSize > UDP_TX_PACKET_MAX_SIZE){
+    //clear the buffer
+    memset(packetBuffer, 0, sizeof(char) * UDP_TX_PACKET_MAX_SIZE);
+    return;
+    }
+    if(packetSize < 8){
+      Serial.println("packet not valid!");
+      return;
+    }
+
+    Serial.print("Received packet of size ");
+    Serial.println(packetSize);
+
+    // read the packet into packetBufffer
+    udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
+    Buffer packet(packetBuffer);
+    //packet.print();
+    
+    Serial.println("Content:");
+    printBufferHex(packet.getPayload(), packet.getLength());
+    printBufferHex(packetBuffer, packetSize);
+    //Serial.println(packetBuffer);
+
+    //clear the buffer
+    memset(packetBuffer, 0, sizeof(char) * packetSize);
+
+  }
+  //send data only if connected
   if(connected && !(millis() % beatRate)){
 
     //Send a packet
-    udp.beginPacket(broadcast,udpPort);
-    udp.printf("mac: %s", WiFi.macAddress().c_str());
+    //udp.begin(WiFi.localIP(),localPort);
+    udp.beginPacket(broadcast,remotePort);
+    udp.printf("{\n\t\"mac\": \"%s\"\n}", WiFi.macAddress().c_str());
     udp.endPacket();
     Serial.println("packet sent!");
     
@@ -76,10 +117,10 @@ void WiFiEvent(WiFiEvent_t event){
       case SYSTEM_EVENT_STA_GOT_IP:
           //When connected set 
           Serial.print("WiFi connected! IP address: ");
-          Serial.println(WiFi.localIP());  
+          Serial.println(WiFi.localIP()); 
           //initializes the UDP state
+          udp.begin(localPort); 
           //This initializes the transfer buffer
-          udp.begin(WiFi.localIP(),udpPort);
           connected = true;
           broadcast = calculateBroadcast(WiFi.localIP(),WiFi.subnetMask());
           printWiFiInfo();
@@ -111,6 +152,22 @@ void printWiFiInfo(){
   Serial.print("DNS: ");
   Serial.println(WiFi.dnsIP());
   Serial.println("--------------------------");
+}
+
+
+void printBufferHex(char* buff, uint16_t length){
+  for(uint16_t i = 0; i < length; i++){
+    Serial.print(buff[i],HEX);
+    Serial.print(' ');
+  }
+  Serial.print('\n');
+}
+void printBufferHex(String buff, uint16_t length){
+  for(uint16_t i = 0; i < length; i++){
+    Serial.print(buff[i],HEX);
+    Serial.print(' ');
+  }
+  Serial.print('\n');
 }
 
 IPAddress calculateBroadcast(IPAddress ip, IPAddress subnet){
