@@ -26,14 +26,13 @@ boolean connected = false;
 WiFiUDP udp;
 
 //delay between each packet
-const unsigned int beatRate = 500;
+const unsigned int beatRate = 5000;
 
 void setup(){
   // Initilize hardware serial:
   Serial.begin(115200);
   
   //Connect to the WiFi network
-  WiFi.setHostname("lampada-salone");
   connectToWiFi(networkName, networkPswd);
 }
 
@@ -67,6 +66,7 @@ void connectToWiFi(const char * ssid, const char * pwd){
   
   //Initiate connection
   WiFi.begin(ssid, pwd);
+  WiFi.setHostname("lampada-salone");
   Serial.println("Waiting for WIFI connection...");
 }
 
