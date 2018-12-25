@@ -17,7 +17,7 @@ const char * networkPswd = "U43UU8CRUR";
 // a network broadcast address
 IPAddress broadcast;
 //const char * udpAddress = "192.168.0.255";
-const int udpPort = 3333;
+const int udpPort = 51966;
 
 //Are we currently connected?
 boolean connected = false;
@@ -25,27 +25,36 @@ boolean connected = false;
 //The udp library class
 WiFiUDP udp;
 
+//delay between each packet
+const unsigned int beatRate = 500;
+
 void setup(){
   // Initilize hardware serial:
   Serial.begin(115200);
   
   //Connect to the WiFi network
+  WiFi.setHostname("lampada-salone");
   connectToWiFi(networkName, networkPswd);
 }
 
 void loop(){
   //only send data when connected
-  if(connected){
+  if(connected && !(millis() % beatRate)){
+
     //Send a packet
     udp.beginPacket(broadcast,udpPort);
-    udp.printf("Seconds since boot: %u", millis()/1000);
+    udp.printf("mac: %s", WiFi.macAddress().c_str());
     udp.endPacket();
+    Serial.println("packet sent!");
+    
+    //wait 1ms to ensure that cond doesn't repeat
+    delay(1);
   }
   //Print connection info
-  printWiFiInfo();
+  //printWiFiInfo();
 
   //Wait for 1 second
-  delay(1000);
+  //delay(1000);
 }
 
 void connectToWiFi(const char * ssid, const char * pwd){
@@ -58,8 +67,6 @@ void connectToWiFi(const char * ssid, const char * pwd){
   
   //Initiate connection
   WiFi.begin(ssid, pwd);
-  WiFi.setHostname("NOME DA CAMBIARE");
-
   Serial.println("Waiting for WIFI connection...");
 }
 
@@ -75,6 +82,7 @@ void WiFiEvent(WiFiEvent_t event){
           udp.begin(WiFi.localIP(),udpPort);
           connected = true;
           broadcast = calculateBroadcast(WiFi.localIP(),WiFi.subnetMask());
+          printWiFiInfo();
           break;
       case SYSTEM_EVENT_STA_DISCONNECTED:
           Serial.println("WiFi lost connection");
