@@ -1,17 +1,19 @@
 
 #include <WiFi.h>
 #include <WiFiUdp.h>
-#include "buffer.h"
+#include "Packet.h"
 //#include <IPAddress.h>
 #define UDP_TX_PACKET_MAX_SIZE 512
 
 //Functions declaration
 void printWiFiInfo();
-void printBufferHex(char* buff, uint16_t length);
-void printBufferHex(String buff, uint16_t length);
+void printBufferHex(char* buff, size_t length);
+void printBufferHex(String buff, size_t length);
+void printBufferHex(uint8_t buff, size_t length);
 void connectToWiFi(const char * ssid, const char * pwd);
 void WiFiEvent(WiFiEvent_t event);
 IPAddress calculateBroadcast(IPAddress ip, IPAddress subnet);
+void reply();
 
 // WiFi network name and password:
 const char * networkName = "Sol 2.4";
@@ -33,7 +35,10 @@ const unsigned int beatRate = 5000;
 
 
 // buffers for receiving and sending data
-char packetBuffer[UDP_TX_PACKET_MAX_SIZE]; //buffer to hold incoming packet,
+uint8_t packetBuffer[UDP_TX_PACKET_MAX_SIZE]; //buffer to hold incoming packet,
+size_t offset = 0;
+Packet packet;
+
 
 void setup(){
   // Initilize hardware serial:
@@ -57,24 +62,25 @@ void loop(){
     }
     if(packetSize < 8){
       Serial.println("packet not valid!");
+      memset(packetBuffer, 0, sizeof(uint8_t) * packetSize);
       return;
     }
 
-    Serial.print("Received packet of size ");
-    Serial.println(packetSize);
+    //Serial.print("Received packet of size ");
+    //Serial.println(packetSize);
 
     // read the packet into packetBufffer
     udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
-    Buffer packet(packetBuffer);
+    parse(packetBuffer, packetSize, packet);
     packet.print();
-    
+    reply();
     //Serial.println("Content:");
     //printBufferHex(packet.getPayload(), packet.getLength());
     //printBufferHex(packetBuffer, packetSize);
     //Serial.println(packetBuffer);
 
     //clear the buffer
-    memset(packetBuffer, 0, sizeof(char) * packetSize);
+    memset(packetBuffer, 0, sizeof(uint8_t) * packetSize);
 
   }
   //send data only if connected
@@ -155,19 +161,34 @@ void printWiFiInfo(){
 }
 
 
-void printBufferHex(char* buff, uint16_t length){
-  for(uint16_t i = 0; i < length; i++){
+void printBufferHex(char* buff, size_t length){
+  for(size_t i = 0; i < length; i++){
     Serial.print(buff[i],HEX);
     Serial.print(' ');
   }
   Serial.print('\n');
 }
-void printBufferHex(String buff, uint16_t length){
-  for(uint16_t i = 0; i < length; i++){
+void printBufferHex(uint8_t* buff, size_t length){
+  for(size_t i = 0; i < length; i++){
+    Serial.print((char)buff[i],HEX);
+    Serial.print(' ');
+  }
+  Serial.print('\n');
+}
+void printBufferHex(String buff, size_t length){
+  for(size_t i = 0; i < length; i++){
     Serial.print(buff[i],HEX);
     Serial.print(' ');
   }
   Serial.print('\n');
+}
+
+void reply(){
+    Serial.println("reply!");
+
+    udp.beginPacket(broadcast,remotePort);
+    udp.printf("{\n\t\"type\":\"%c\",\n\t\"mac\": \"%s\",\n\t\"pld_len\":\"%i\",\n\t\"payload\":\"%s\"\n}", (char)packet.type, packet.mac.c_str(), (int)packet.payload_len, packet.payload.c_str());
+    udp.endPacket();
 }
 
 IPAddress calculateBroadcast(IPAddress ip, IPAddress subnet){
