@@ -1,13 +1,19 @@
+#ifndef PACKET_H
+#define PACKET_H
 #include <stdio.h>
 #include <Arduino.h>
 
-struct Packet{
+struct Packet
+{
     uint8_t type = 0;
     String mac = "ff:ff:ff:ff:ff:ff";
-    size_t payload_len = 0;
-    String payload = "";
+    uint8_t payload_len = 0;
+    uint8_t* payload;
     Packet();
+    void release();
     void print();
 };
 
-bool parse(uint8_t* data, size_t len, Packet& packet);
+bool parse(uint8_t* buffer, size_t len, Packet* packet);
+
+#endif

@@ -2,5 +2,36 @@
     "terminal.integrated.env.windows": {
         "PATH": "C:\\Users\\Sasha\\.platformio\\penv\\Scripts;C:\\Users\\Sasha\\.platformio\\penv;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Python37\\Scripts\\;C:\\Python37\\;C:\\Program Files (x86)\\Python36-32\\Scripts\\;C:\\Program Files (x86)\\Python36-32\\;C:\\Program Files (x86)\\Razer Chroma SDK\\bin;C:\\Program Files\\Razer Chroma SDK\\bin;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;C:\\Users\\Sasha\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Microsoft VS Code\\bin;C:\\Users\\Sasha\\AppData\\Local\\atom\\bin;C:\\Program Files\\nodejs\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\Python27\\;;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\Java\\jdk1.8.0_191\\bin;C:\\Android\\android-sdk\\tools;C:\\Android\\android-sdk\\platform-tools;C:\\Android\\android-sdk\\tools\\bin;C:\\Users\\Sasha\\AppData\\Roaming\\npm;C:\\Users\\Sasha\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Sasha\\AppData\\Local\\Programs\\radare2;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Python37\\Scripts\\;C:\\Python37\\;C:\\Program Files (x86)\\Python36-32\\Scripts\\;C:\\Program Files (x86)\\Python36-32\\;C:\\Program Files (x86)\\Razer Chroma SDK\\bin;C:\\Program Files\\Razer Chroma SDK\\bin;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;C:\\Users\\Sasha\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\Microsoft VS Code\\bin;C:\\Users\\Sasha\\AppData\\Local\\atom\\bin;C:\\Program Files\\nodejs\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\Python27\\;;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\Java\\jdk1.8.0_191\\bin;C:\\Android\\android-sdk\\tools;C:\\Android\\android-sdk\\platform-tools;C:\\Android\\android-sdk\\tools\\bin;C:\\Users\\Sasha\\AppData\\Roaming\\npm;C:\\Users\\Sasha\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Sasha\\AppData\\Local\\Programs\\radare2",
         "PLATFORMIO_CALLER": "vscode"
+    },
+    "files.associations": {
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "exception": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "initializer_list": "cpp",
+        "iosfwd": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "memory": "cpp",
+        "new": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp",
+        "tuple": "cpp",
+        "typeinfo": "cpp",
+        "utility": "cpp"
     }
 }
