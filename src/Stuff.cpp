@@ -31,6 +31,18 @@ void Board::update(Packet* packet, char* mac)
             }
             break;
     
+        case 0x51:
+            RState = packet->payload[0];
+            GState = packet->payload[1];
+            BState = packet->payload[2];
+
+            Serial.print("R => ");
+            Serial.println(RState);
+            Serial.print("G => ");
+            Serial.println(GState);
+            Serial.print("B => ");
+            Serial.println(BState);
+
         default:
             break;
     }
@@ -38,11 +50,16 @@ void Board::update(Packet* packet, char* mac)
 
 Board::Board()
 {
-    pinMode(rePin, OUTPUT);
+    pinMode(R, OUTPUT);
+    pinMode(G, OUTPUT);
+    pinMode(B, OUTPUT);
 }
 
 void Board::process()
 {
-    digitalWrite(rePin, state);
+    //digitalWrite(B, state);
+    analogWrite(R,RState);
+    analogWrite(G,GState);
+    analogWrite(B,BState);
 }
 
